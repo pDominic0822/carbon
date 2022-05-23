@@ -148,7 +148,7 @@ export const getstOrgRetrofitRecord = (state, params) => {
 };
 
 /**
- * 获取生产线状态
+ * 获取订单状态
  */
 export const getOrgChooseOrder = (state, params) => {
 	// const _route = router.app._route;
