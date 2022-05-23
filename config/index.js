@@ -16,7 +16,8 @@ module.exports = {
 		proxyTable: {
 			'/carbon': {
 				// target: 'http://net-accountant.educhainx.com/',
-				target: 'http://192.168.0.12:8067/',
+				// target: 'http://192.168.0.12:8067/',
+				target: 'http://172.16.16.37:8065/',
 				// target: 'http://192.168.0.114:8080/',
 				// target: 'http://localhost:8081/',
 				changeOrigin: true,
@@ -27,7 +28,7 @@ module.exports = {
 		},
 
 		// Various Dev Server settings
-		host: '192.168.0.96', // can be overwritten by process.env.HOST
+		host: 'localhost', // can be overwritten by process.env.HOST
 		port: 9092, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
 		autoOpenBrowser: false,
 		errorOverlay: true,

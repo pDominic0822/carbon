@@ -89,7 +89,7 @@ export default {
 					code: 'AnalsissF8'
 				},
 				{
-					name: '耗电库存',
+					name: '料电库存',
 					code: 'AnalsissF9'
 				},
 				{

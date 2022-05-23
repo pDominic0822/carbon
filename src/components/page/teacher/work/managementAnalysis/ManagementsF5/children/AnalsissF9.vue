@@ -8,13 +8,13 @@
 			</el-tabs>
 		</div>
 		<template v-if="isTabCollse === 0">
-			aa
 			<div class="chart1" ref="chart1"></div>
 			<div>
 				<table class="demo-table mt20">
-					<tr>
-						<td>
-							碳配额库存 ( 吨 )
+					<tr v-for="(item,index) in orgList" :key="index">
+						<td>{{item.yearsTime || ''}}</td>
+						<td v-for="(innerItem, innerIndex) in item.listArr" :key="innerIndex">
+							{{(innerItem && innerItem.value) || (innerItem && innerItem.orgName) || 0}}
 						</td>
 					</tr>
 				</table>
@@ -23,9 +23,22 @@
 		<template  v-if="isTabCollse === 1">
 			<div>
 				<table class="demo-table mt20">
-					<tr>
-						<td>
-							实际碳排放 ( 吨 )
+					<tr v-for="(item,index) in orgList" :key="index">
+						<td>{{item.yearsTime || ''}}</td>
+						<td v-for="(innerItem, innerIndex) in item.listArr" :key="innerIndex">
+							{{(innerItem && innerItem.value) || (innerItem && innerItem.orgName) || 0}}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</template>
+		<template  v-if="isTabCollse === 2">
+			<div>
+				<table class="demo-table mt20">
+					<tr v-for="(item,index) in orgList" :key="index">
+						<td>{{item.yearsTime || ''}}</td>
+						<td v-for="(innerItem, innerIndex) in item.listArr" :key="innerIndex">
+							{{(innerItem && innerItem.value) || (innerItem && innerItem.orgName) || 0}}
 						</td>
 					</tr>
 				</table>
@@ -35,33 +48,55 @@
 </template>
 
 <script>
-
+import {getYear} from '../js/get.js';
 export default {
 	components: {
 	},
 	name: 'login',
 	data () {
 		return {
+			getYear: getYear,
+			infoList: [],
+			orgList: [],
+			yearList: [],
+			tdList: [],
 			tabList: [
 				{
-					label: '碳沙盘模拟企业经营分析',
+					label: '年初物料库存',
+					tableType: 'materialStockAnalysis',
 					routerLink: 0
 				},
 				{
-					label: '年度碳配额库存 ( 吨 )',
+					label: '年初绿电库存',
+					tableType: 'greenElectricityStockAnalysis',
 					routerLink: 1
+				},
+				{
+					label: '年初煤电库存',
+					tableType: 'coalElectricityStockAnalysis',
+					routerLink: 2
 				}
 			],
+			yearArr: [],
 			tabsVal: '',
 			isTabCollse: 0
 		};
 	},
 	created () {
+		this.tabsVal = '0';
+		this.handleClick();
 	},
 	methods: {
+		async getYearInfo () {
+			this.orgList = await this.getYear(this.tableType);
+			this.infoList = this.orgList[0].listArr;
+			console.log(this.orgList);
+		},
 		handleClick () {
 			let item = this.tabList[this.tabsVal];
+			this.tableType = item.tableType;
 			this.isTabCollse = item.routerLink;
+			this.getYearInfo();
 		}
 	}
 };
