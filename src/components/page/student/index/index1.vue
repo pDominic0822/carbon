@@ -284,11 +284,25 @@
 						<el-row :gutter="20" class="bllddli">
 							<el-col :span="24">
 								<div class="tests dingdandd">
-									<el-tag class="tesss"  type="success">订单数量：1000包</el-tag>
-									<el-tag   class="tesss"  type="success">订单单价：1000元/包</el-tag>
-									<br>
-									<el-tag  class="tesss" type="danger">违约单价：1000元/包</el-tag>
-									<el-tag  class="tesss" type="warning">订单状态：已交付</el-tag>
+									<template v-if="$store.state.OrgDeliverState === -1">
+										未选订单
+									</template>
+									<!-- 订单未交付 -->
+									<template v-if="$store.state.OrgDeliverState === 0">
+										<el-tag class="tesss"  type="success">订单数量：{{$store.state.OrgDeliverRecord.orderCount || 0}}包</el-tag>
+										<el-tag   class="tesss"  type="success">订单单价：{{$store.state.OrgDeliverRecord.unitPrice || 0}}元/包</el-tag>
+										<el-tag  class="tesss" type="danger">违约单价：{{($store.state.OrgDeliverRecord.unitPrice || 0) * 2}}元/包</el-tag>
+									</template>
+									<!-- 订单已交付 -->
+									<template v-if="$store.state.OrgDeliverState === 1">
+										<el-tag class="tesss"  type="success">订单数量：{{$store.state.OrgDeliverRecord.orderCount || 0}}包</el-tag>
+										<el-tag   class="tesss"  type="success">订单单价：{{$store.state.OrgDeliverRecord.unitPrice || 0}}元/包</el-tag>
+										<el-tag  class="tesss" type="danger">违约单价：{{($store.state.OrgDeliverRecord.unitPrice || 0) * 2}}元/包</el-tag>
+										<br>
+										<el-tag class="tesss"  type="success">交付数量：{{$store.state.OrgDeliverRecord.deliverCount || 0}}包</el-tag>
+										<el-tag class="tesss"  type="success">违约数量：{{$store.state.OrgDeliverRecord.violationCount || 0}}包</el-tag>
+										<el-tag  class="tesss" type="warning">违约金额：{{($store.state.OrgDeliverRecord.unitPrice || 0) * 2 * ($store.state.OrgDeliverRecord.violationCount || 0)}}元</el-tag>
+									</template>
 								</div>
 							</el-col>
 						</el-row>

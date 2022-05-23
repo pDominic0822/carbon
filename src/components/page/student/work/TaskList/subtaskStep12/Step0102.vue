@@ -93,8 +93,10 @@
 					<td>
 						{{sellItem.trader || '空'}}
 					</td>
-					<td @click="_handBuy(sellIndex)">
-						买入
+					<td>
+						<el-button type="success" @click="_handBuy(sellIndex)">
+							买入
+						</el-button>
 					</td>
 					<td>
 						{{sellItem.buyOrgName || '空'}}
