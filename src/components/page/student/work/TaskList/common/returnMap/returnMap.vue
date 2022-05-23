@@ -8,7 +8,7 @@
 				<td v-for="(key, val) in item.answerValueMap" :key="key + val">
 					{{val | fieldCode(tableType ,'rowName', item.fieldCode )}}
 					:
-					{{key}}
+					{{key | formatNumber}}
 				</td>
             </tr>
         </table>

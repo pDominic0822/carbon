@@ -6,9 +6,9 @@
  * @Description: In User Settings Edit
  * @FilePath: \liangzhi_examinationd:\2021WebCode\blockChain_SupplyFinance1.0\README.md
 -->
-# 区块链产品
+# 产品
 
-> 区块链产品会计版
+> 产品碳沙盘版
 
 ## 风格
 项目启用了eslint，主风格eslint配置使用了[standard](https://github.com/standard/standard/blob/master/docs/RULES-zhcn.md)。
