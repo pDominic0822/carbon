@@ -258,12 +258,6 @@ export default {
 					if (res.data) {
 						this.reenLoanRepaymen = res.data;
 					}
-					// if (res.data && res.data.applyAmount) { // 有值的时候，不再提交
-					// 	this.isdisabledCollse = true;
-					// }
-					// if (res.data) {
-					// 	this.fromInfo = res.data;
-					// }
 				}
 			});
 		},

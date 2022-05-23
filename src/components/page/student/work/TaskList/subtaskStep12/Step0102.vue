@@ -13,7 +13,7 @@
 				:key="index" :label="tabsItem.label">
 				</el-tab-pane>
 			</el-tabs>
-			{{carbonQuotaAmount}}
+			现有碳汇：{{carbonQuotaAmount}}
 			<!-- <el-button type="primary" @click="getRecord()">主要按钮</el-button> -->
 			<template v-if="sellType === 'floorTrading'">
 				<table class="demo-table">

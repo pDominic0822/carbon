@@ -22,47 +22,47 @@ export const FieldCodeArr = {
 		// 技改投入资金（元）
 		'retrofit_cost_money': {
 			fieldName: '技改投入资金（元）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 技改剩余绿贷资金（元）
 		'retrofit_remaining_green_loan_money': {
 			fieldName: '技改剩余绿贷资金（元）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 节能技改减少耗电（度）
 		'energy_saving_reduce_power': {
 			fieldName: '节能技改减少耗电（度）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 节能技改减少排放（kg）
 		'energy_saving_reduce_emission': {
 			fieldName: '节能技改减少排放（kg）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 减排技改减少排放（kg）
 		'emission_reduction_reduce_emission': {
 			fieldName: '减排技改减少排放（kg）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 合计技改减排量（kg）
 		'total_reduce_emission': {
 			fieldName: '合计技改减排量（kg）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 年度产品碳标签（kg/个）
 		'year_produce_label': {
 			fieldName: '年度产品碳标签（kg/个）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 年度产品碳成本（元/个）
 		'year_produce_carbon_cost': {
 			fieldName: '年度产品碳成本（元/个）',
-			countValue: ''
+			countValue: '数值'
 		},
 		// 年度还贷金额（元）
 		'year_repay_loan_money': {
 			fieldName: '年度还贷金额（元）',
-			countValue: ''
+			countValue: '数值'
 		}
 	},
 	productEmissionAccounting: {
