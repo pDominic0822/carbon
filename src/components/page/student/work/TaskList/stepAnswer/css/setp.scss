@@ -1,0 +1,254 @@
+.node-box{
+	// width: 1000px;
+	margin: 0 auto;
+	margin-top: 30px;
+	// background-color: #02A7F0;
+}
+
+.answer-box{
+	// height: 200px;
+	position: relative;
+	width: 100%;
+	margin-top: 20px;
+	.box-triangle{
+		position: absolute;
+		top: 30px;
+		left: 30px;
+		border: 10px solid transparent;
+		border-right: 10px solid #F6F6F6;
+	}
+	&.positionr{
+		// height: 350px;
+		.imgs{
+			top: 0px;
+			right: 0px;
+			background: url('./img/head22.png') no-repeat center center;
+			background-size: contain;
+		}
+		.toptic{
+			position: relative;
+			top: 0px;
+			right: 60px;
+			width: 600px;
+			background: #636EA6;
+			font-size: 15px;
+			font-family: PingFangSC-Regular, PingFang SC;
+			font-weight: 400;
+			color: #FFFFFF;
+			line-height: 24px;
+			float: right;
+			// margin-right: 60px;
+			.box-triangle{
+				top: 16px;
+				left: 597px;
+				border: 9px solid transparent;
+				border-left: 10px solid #636EA6;;
+			}
+			.el-radio{
+				display: block;
+				color: #FFFFFF;
+				margin-bottom: 10px;
+			}
+		}
+	}
+	&.positionl{
+		.imgs{
+			top: 0px;
+			left: 0px;
+			background: url('./img/head2.png') no-repeat center center;
+			background-size: contain;
+		}
+		.toptic{
+			float: left;
+			background-color: #F6F6F6;
+			margin-left: 60px;
+			.box-triangle{
+				position: absolute;
+				top: 16px;
+				left: 43px;
+				border: 9px solid transparent;
+				border-right: 10px solid #F6F6F6;
+			}
+		}
+	}
+	.imgs{
+		position: absolute;
+		width: 40px;
+		height: 40px;
+	}
+}
+.toptic{
+	min-width: 400px;
+	max-width: 720px;
+	float: left;
+	background: #FAFCFC;
+	padding: 18px 20px;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 0px 8px 0px rgba(174, 174, 174, 0.1);
+	border-radius: 10px;
+	.pages-rideo{
+		position: absolute;
+		top: 125px;
+		left: 20px;
+		width: 483px;
+		height: 184px;
+		background: #373737;
+		border: 1px solid #E5E5E5;
+		box-shadow: 0px 0px 8px 0px rgba(191, 191, 191, 0.3);
+		border-radius: 10px;
+		padding: 20px 25px;
+		z-index: 100;
+		&::after{
+			position: absolute;
+			content: '';
+			width: 0px;
+			height: 0px;
+			border: 15px solid transparent;
+			border-bottom: 15px solid #373737;
+			left: 60px;
+			top: -30px;
+			display: inline-block;
+		}
+		&::before{
+			position: absolute;
+			content: '';
+			width: 0px;
+			height: 0px;
+			border: 15px solid transparent;
+			border-bottom: 15px solid #373737;
+			right: 60px;
+			top: -30px;
+			display: inline-block;
+		}
+		.enters{
+			font-size: 18px;
+			font-family: PingFang SC;
+			font-weight: 500;
+			color: #FFFFFF;
+			line-height: 36px;
+			text-align: center;
+		}
+		.entTitle{
+			font-size: 16px;
+			font-family: PingFang SC;
+			font-weight: 400;
+			color: #FFFFFF;
+			line-height: 26px;
+		}
+	}
+	.fontss{
+		color: #CC4C46;
+		position: relative;
+	}
+}
+
+.positionr{
+	.demo-table{
+		td{
+			color: #fff;
+			input {
+				color: #fff;
+				border:1px solid #ccc;
+			}
+		}
+	}
+}
+
+.demo-table{
+	table-layout: fixed;
+	 width: 100%;
+	 border-collapse:collapse;
+	 text-align: center;
+ }
+ 
+ .demo-table .fcolor1{
+	color: #333;
+	background: #f6f6f6;
+ }
+ .bordertop-bg{
+	background: #152055;
+ }
+ .bordertop-bg > td{
+	color: #FFF !important;
+ }
+ .demo-table tr.color1{
+	background: #f6f6f6;
+	color: #333;
+ }
+ 
+ .demo-table tr.color1 td{
+	color: #333;
+ }
+ 
+ .demo-table tr.noborder.bordertop td{
+	border-bottom:1px solid #ccc;
+ }
+ 
+ 
+ .demo-table tr.noborder td{
+	border:1px solid transparent;
+ }
+
+ .demo-table tr td{
+	border:1px solid #ccc;
+ }
+
+ .demo-table tr th{
+    background: #047aff;
+    color: #fff;
+	border:1px solid #ccc;
+ }
+ 
+ .demo-table td,
+ .demo-table th
+ {
+	height: 40px;
+	line-height: 40px;
+	font-family: PingFangSC-Regular;
+	font-size: 15px;
+	color: #333333;
+	letter-spacing: 0;
+	line-height: 40px;
+}
+
+.demo-table tr{
+    position: relative;
+ }
+
+ /* .el-icon-error{
+     position: absolute;
+     top: 10px;
+     left: 10px;
+
+ } */
+ 
+ .demo-table td input{
+	width: 100%;
+	/* height: 100%; */
+	/* border: none; */
+	text-align: center;
+ }
+ 
+ .demo-table td.color1{
+	background: #f6f6f6;
+	color: #333;
+ }
+ 
+ .demo-table th{
+	height: 30px;
+	line-height: 30px;
+	background: #E3F4EB;
+	font-family: PingFangSC-Medium;
+	font-size: 16px;
+	color: #333333;
+	letter-spacing: 0;
+	line-height: 28px;
+ }
+ 
+ .demo-table input.blue{
+	color: blue;
+ }
+ 
+ .demo-table,.demo-table td,.demo-table th{
+	 border:1px solid #ccc;
+ }
