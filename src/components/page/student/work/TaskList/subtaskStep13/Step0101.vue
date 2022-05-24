@@ -140,6 +140,7 @@ export default {
 				params: {
 					moldId: this.$route.query.moldId || this.moldId || '',
 					subtaskId: this.$route.query.subtaskId || this.subtaskId || '',
+					industryId: this.$route.query.industryId || this.industryId || '',
 					taskId: this.$route.query.taskId,
 					clazzYearsPushId: this.$route.query.clazzYearsPushId || '',
 					clearJson: JSON.stringify(this.form)

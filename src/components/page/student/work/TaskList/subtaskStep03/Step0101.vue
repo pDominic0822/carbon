@@ -27,11 +27,11 @@
 							全额煤电碳排放（kg）=季度消耗电力数量  *   系统参数电力碳排放 *  4
 						</p>
 					</div>
-					<div class="mt20">
+					<div class="mt30">
 						核定配额 ( Kg ):
 						{{(showInputMap.receiveAmount) | formatNumber}}
 						<p class="fr">
-							<el-button type="success" :disabled="isSaveData" @click="getPageJson()">
+							<el-button type="success" size="mini" :disabled="isSaveData" @click="getPageJson()">
 								{{!isSaveData ? '领取' : '已领取'}}
 							</el-button>
 						</p>

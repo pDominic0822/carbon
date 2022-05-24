@@ -10,13 +10,13 @@
 				<div class="fl imgps">
 				</div>
 				<div class="fl sellinfo">
-					<p class="span1 mt15">
+					<div class="span1 mt15">
 						绿贷申请
-					</p>
-					<p class="mt15">
-						利息计算公式=本金*利率
-					</p>
-					<div class="demo-input mt15">
+						<p class="fr">
+							利息计算公式=本金*利率
+						</p>
+					</div>
+					<div class="demo-input mt30">
 						<el-row :gutter="20">
 							<el-col :span="6">
 								贷款本金：

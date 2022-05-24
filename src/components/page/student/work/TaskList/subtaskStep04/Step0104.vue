@@ -21,7 +21,7 @@
 								一轮采购数量( kg )：
 							</el-col>
 							<el-col :span="12">
-								{{fromInfo.firstBuy}}
+								{{fromInfo.firstBuy | formatNumber}}
 							</el-col>
 						</el-row>
 					</div>
@@ -52,7 +52,7 @@
 								采购费用( 元 )：
 							</el-col>
 							<el-col :span="12">
-								{{((fromInfo.unitSinkValue || 0) * (fromInfo.secondBuy || 0)).toFixed(2)}}
+								{{(((fromInfo.unitSinkValue || 0) * (fromInfo.secondBuy || 0)).toFixed(2)) | formatNumber}}
 							</el-col>
 						</el-row>
 					</div>
@@ -62,7 +62,7 @@
 								采购总计( kg )：
 							</el-col>
 							<el-col :span="12">
-								{{((fromInfo.firstBuy || 0) + (fromInfo.secondBuy || 0))}}
+								{{((fromInfo.firstBuy || 0) + (fromInfo.secondBuy || 0)) | formatNumber}}
 							</el-col>
 						</el-row>
 					</div>
