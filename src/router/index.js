@@ -33,51 +33,51 @@ const router = new Router({
 		// 	name: 'chainlarge-screen', // 运行大屏
 		// 	component: resolve => require(['@@/student/work/subtask/common/chainLargeScreen/largeScreen'], resolve)
 		// },
-		{
-			name: 'page-index',
-			path: '/page-index',
-			component: resolve => require(['#/page/student/work/TaskList/common/tableSave/tableSave'], resolve)
-		},
-		{
-			path: '/index-1',
-			name: 'index-1',
-			component: resolve => require(['@@/student/index/index1'], resolve)
-		},
-		{
-			path: '/index-2',
-			name: 'index-2',
-			component: resolve => require(['@@/student/index/index2'], resolve)
-		},
-		{
-			path: '/index-3',
-			name: 'index-3',
-			component: resolve => require(['@@/student/index/index3'], resolve)
-		},
-		{
-			path: '/index-4',
-			name: 'index-4',
-			component: resolve => require(['@@/student/index/index4'], resolve)
-		},
+		// {
+		// 	name: 'page-index',
+		// 	path: '/page-index',
+		// 	component: resolve => require(['#/page/student/work/TaskList/common/tableSave/tableSave'], resolve)
+		// },
+		// {
+		// 	path: '/index-1',
+		// 	name: 'index-1',
+		// 	component: resolve => require(['@@/student/index/index1'], resolve)
+		// },
+		// {
+		// 	path: '/index-2',
+		// 	name: 'index-2',
+		// 	component: resolve => require(['@@/student/index/index2'], resolve)
+		// },
+		// {
+		// 	path: '/index-3',
+		// 	name: 'index-3',
+		// 	component: resolve => require(['@@/student/index/index3'], resolve)
+		// },
+		// {
+		// 	path: '/index-4',
+		// 	name: 'index-4',
+		// 	component: resolve => require(['@@/student/index/index4'], resolve)
+		// },
 		{
 			path: '/the-course', // 课程
 			name: 'the-course',
 			component: resolve => require(['@@/theCourse/theCourse'], resolve)
-		},
-		{
-			path: '/the-work', // 课程
-			name: 'the-work',
-			component: resolve => require(['@@/theCourse/work'], resolve)
-		},
-		{
-			path: '/the-work2', // 课程
-			name: 'the-work2',
-			component: resolve => require(['@@/theCourse/work2'], resolve)
-		},
-		{
-			path: '/the-work3', // 课程
-			name: 'the-work3',
-			component: resolve => require(['@@/theCourse/work3'], resolve)
 		}
+		// {
+		// 	path: '/the-work', // 课程
+		// 	name: 'the-work',
+		// 	component: resolve => require(['@@/theCourse/work'], resolve)
+		// },
+		// {
+		// 	path: '/the-work2', // 课程
+		// 	name: 'the-work2',
+		// 	component: resolve => require(['@@/theCourse/work2'], resolve)
+		// },
+		// {
+		// 	path: '/the-work3', // 课程
+		// 	name: 'the-work3',
+		// 	component: resolve => require(['@@/theCourse/work3'], resolve)
+		// }
 	],
 	strict: process.env.NODE_ENV !== 'production'
 });

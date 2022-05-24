@@ -51,7 +51,7 @@ export default {
 			this.tableType = item.tableType;
 		},
 		getPageJson () {
-			this.$confirm('是否确认提交（只有一次提交机会）', '再次提示', {
+			this.$confirm('是否进入经营年', '提示', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				center: true,

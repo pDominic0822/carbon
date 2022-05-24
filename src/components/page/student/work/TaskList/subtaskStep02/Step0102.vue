@@ -17,17 +17,44 @@
 						利息计算公式=本金*利率
 					</p>
 					<div class="demo-input mt15">
-						贷款本金：
-						<el-input-number size="mini" style="width:240px" v-model="fromInfo.applyAmount" :precision="2" :step="1000" :min="1000" :max="1000000000"></el-input-number>
+						<el-row :gutter="20">
+							<el-col :span="6">
+								贷款本金：
+							</el-col>
+							<el-col :span="12">
+								<el-input-number size="mini" style="width:240px" v-model="fromInfo.applyAmount" :precision="2" :step="100" :min="1000" :max="1000000000"></el-input-number>
+							</el-col>
+						</el-row>
 					</div>
 					<div class="mt20">
-						利率:{{fromInfo.loansRate}}
+						<el-row :gutter="20">
+							<el-col :span="6">
+								利率:
+							</el-col>
+							<el-col :span="12">
+								{{fromInfo.loansRate}}
+							</el-col>
+						</el-row>
 					</div>
 					<div class="clearfix mt15 demo-input">
-						绿贷年限: {{fromInfo.loansYears}}（年）
+						<el-row :gutter="20">
+							<el-col :span="6">
+							绿贷年限:
+							</el-col>
+							<el-col :span="12">
+								{{fromInfo.loansYears}}（年）
+							</el-col>
+						</el-row>
 					</div>
 					<div class="clearfix mt15 demo-input">
-						贷款利息: {{fromInfo.applyAmount * parseFloat(fromInfo.loansRate) / 100}}（元/年）
+						<el-row :gutter="20">
+							<el-col :span="6">
+								贷款利息:
+							</el-col>
+							<el-col :span="12">
+								{{(fromInfo.applyAmount || 0) * parseFloat(fromInfo.loansRate) / 100}}（元/年）
+							</el-col>
+						</el-row>
 					</div>
 				</div>
 			</li>
@@ -99,7 +126,7 @@ export default {
 				});
 				return false;
 			}
-			if (applyAmount < 0 || applyAmount > 100000000) {
+			if (applyAmount < 1000 || applyAmount > 100000000) {
 				this.$message({
 					type: 'error',
 					message: '输入金额最小为0,最大为一个亿!'
@@ -107,7 +134,7 @@ export default {
 				return false;
 			}
 			this.$confirm(
-				`是否确认提交（只有一次提交机会）`,
+				`申请绿贷金额：${applyAmount}元`,
 				'提示',
 				{
 					confirmButtonText: '确定',
@@ -130,7 +157,7 @@ export default {
 					if (res.success) {
 						this.init();
 						this.$store.commit('getPropertyTypeStatis', 'greenLoansAmount');
-						this.$confirm(`申请绿贷金额：${this.fromInfo.applyAmount}`, '成功', {
+						this.$confirm(`申请绿贷金额：${this.fromInfo.applyAmount}元`, '成功', {
 							confirmButtonText: '确定',
 							center: true,
 							showCancelButton: false,
