@@ -225,6 +225,11 @@ export default {
 							}).catch(() => {
 							});
 							this.init();
+						} else {
+							this.$message({
+								type: 'success',
+								message: `${res.message}`
+							});
 						}
 					});
 				}).catch(() => {});

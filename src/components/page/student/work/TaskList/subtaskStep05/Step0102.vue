@@ -125,19 +125,6 @@ export default {
 						if (array[seIndex].orgId + '' === orgId + '') {
 							array[seIndex].isMyChoose = true;
 						}
-						// if ((seIndex + 1) !== array.length) { // 不是最后一个
-						// 	let item = res.data[seIndex + 1];
-						// 	if (item.orgId + '' === orgId + '') {
-						// 		item.isMyChoose = true;
-						// 	} else {
-						// 		item.isMyChoose = false;
-						// 	}
-						// }
-						// if (array.length > 0) {
-						// 	if (!array[0].isChoose && array[0].orgId + '' === orgId + '') {
-						// 		array[0].isMyChoose = true;
-						// 	}
-						// }
 						this.trList = res.data;
 					}
 					this.isSaveData = true;
@@ -162,7 +149,7 @@ export default {
 			});
 		},
 		handOrder (index) {
-			this.$confirm('是否确认提交（只有一次提交机会）', '再次提示', {
+			this.$confirm('是否确认提交（只有一次选单机会）', '选择', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				center: true,
@@ -183,6 +170,7 @@ export default {
 					}
 				}).then(res => {
 					if (res.success) {
+						this.$store.commit('getOrgChooseOrder', '');
 						this.$message({
 							type: 'success',
 							message: '选择成功'

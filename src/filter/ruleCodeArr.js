@@ -439,38 +439,38 @@ export const FieldCodeArr = {
 		// 期初碳汇库存
 		'initial_stock': {
 			fieldName: '期初碳汇库存',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		},
 		// 期中碳汇采购
 		'midterm_purchase_count': {
 			fieldName: '期中碳汇采购',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		},
 		// 消耗合计数量
 		'consume_total': {
 			fieldName: '消耗合计数量',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		},
 		// 期初库存碳汇
 		'initial_consume': {
 			fieldName: '期初库存碳汇',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		},
 		// 期中采购碳汇
 		'midterm_consume': {
 			fieldName: '期中采购碳汇',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		},
 		// 期末碳汇库存
 		'end_period_stock': {
 			fieldName: '期末碳汇库存',
-			worthValue: '数量（Kg）',
-			countValue: '价值（元）'
+			countValue: '数量（Kg）',
+			worthValue: '价值（元）'
 		}
 	},
 	technologyRetrofitRecord: {
