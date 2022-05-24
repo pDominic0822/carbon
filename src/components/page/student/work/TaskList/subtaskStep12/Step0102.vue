@@ -458,6 +458,12 @@ export default {
 	&.bossd{
 		li{
 			height: 305px;
+			.imgps{
+				width: 220px;
+				height: 100%;
+				background: url('./../common/images/financingMovableProperty.jpg');
+				background-size: cover;
+			}
 		}
 	}
 	li{
