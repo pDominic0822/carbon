@@ -9,6 +9,8 @@ export const state = {
 	initCapitalNumber: '',
 	dialogreturnDataVisible: false,
 	tableType: '',
+	OrgDeliverRecord: {},
+	OrgDeliverState: -1,
 	returnDataMap: '',
 	routerStep: false,
 	capitalNumber: 0 // 全局金额

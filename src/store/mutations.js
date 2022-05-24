@@ -151,25 +151,32 @@ export const getstOrgRetrofitRecord = (state, params) => {
  * 获取订单状态
  */
 export const getOrgChooseOrder = (state, params) => {
-	// const _route = router.app._route;
-	// ajax({
-	// 	method: 'post',
-	// 	url: '/stOrgTotalPropertyStatistics/getOrgTotalPropertyStatisticsValue',
-	// 	params: {
-	// 		moldId: _route.query.moldId || '',
-	// 		chapterId: _route.query.chapterId || '',
-	// 		clazzYearsPushId: _route.query.clazzYearsPushId || '',
-	// 		subtaskId: _route.query.subtaskId || '',
-	// 		taskId: _route.query.taskId || '',
-	// 		industryId: _route.query.industryId || '',
-	// 		propertyType: propertyType
-	// 	}
-	// }).then(res => {
-	// 	if (res.success) {
-	// 	}
-	// }).catch(err => {
-	// 	throw new Error(err);
-	// });
+	const _route = router.app._route;
+	ajax({
+		method: 'post',
+		url: '/stClazzOrgYearsOrder/getStOrgDeliverRecord',
+		params: {
+			moldId: _route.query.moldId || '',
+			chapterId: _route.query.chapterId || '',
+			clazzYearsPushId: _route.query.clazzYearsPushId || '',
+			subtaskId: _route.query.subtaskId || '',
+			taskId: _route.query.taskId || '',
+			industryId: _route.query.industryId || ''
+		}
+	}).then(res => {
+		if (res.success) {
+			state.OrgDeliverRecord = res.data || {};
+			if (!res.data.isDelivery && !res.data.orderCount) { // 未选订单
+				state.OrgDeliverState = -1;
+			} else if (res.data.isDelivery === 0 && res.data.orderCount) {
+				state.OrgDeliverState = 0;
+			} else if (res.data.isDelivery === 1) {
+				state.OrgDeliverState = 1;
+			}
+		}
+	}).catch(err => {
+		throw new Error(err);
+	});
 };
 
 // 小任务完成

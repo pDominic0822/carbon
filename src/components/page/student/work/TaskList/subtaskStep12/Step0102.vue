@@ -16,34 +16,34 @@
 			现有碳汇：{{carbonQuotaAmount}}
 			<!-- <el-button type="primary" @click="getRecord()">主要按钮</el-button> -->
 			<template v-if="sellType === 'floorTrading'">
-				<table class="demo-table">
+				<table class="demo-table mt20">
 					<tr>
 						<td>卖出数量 ( Kg )</td>
-						<td>单价 ( 元 / Kg )</td>
-						<td colspan="2">操作</td>
+						<td>系统单价 ( 元 / Kg )</td>
+						<!-- <td colspan="2">操作</td> -->
 					</tr>
 					<tr>
 						<td>
-							<input type="text" v-model="fromInfo.sellCount" >
+							<el-input-number  controls-position="right" size="mini" :controls="false" v-model="fromInfo.sellCount" :precision="0" :step="1" :max="100000000"></el-input-number>
 						</td>
 						<td>
 							{{fromInfo.quotaBuyPenalty}}
 						</td>
-						<td>确认出售</td>
-						<td @click="_isGetRecordDialog()">交易记录</td>
+						<!-- <td>确认出售</td>
+						<td @click="_isGetRecordDialog()">交易记录</td> -->
 					</tr>
 				</table>
-				<!-- <input type="text" v-model=?"fromInfo.sellUnitPrice"> -->
 				<div class="mt20 center">
-					<el-button type="success" @click="saveotcTradingJson()">保存</el-button>
+					<el-button type="success" @click="saveotcTradingJson()">销售</el-button>
 				</div>
 			</template>
 			<template v-if="sellType === 'otcTrading'">
-				<table class="demo-table">
+				<table class="demo-table mt20">
 					<tr>
-						<td>指定人</td>
-						<td>卖出人</td>
-						<td>单价 ( 元 / Kg )</td>
+						<td>选择小组</td>
+						<td>卖出数量 ( Kg )</td>
+						<td>系统单价 ( 元 / Kg )</td>
+						<td>自定义单价 ( 元 / Kg )</td>
 					</tr>
 					<tr>
 						<td>
@@ -60,12 +60,15 @@
 							<input type="text" v-model="fromInfo.sellCount" >
 						</td>
 						<td>
+							{{fromInfo.quotaBuyPenalty}}
+						</td>
+						<td>
 							<input type="text" v-model="fromInfo.MyUnitPrice">
 						</td>
 					</tr>
 				</table>
 				<div class="mt20 center">
-					<el-button type="success" @click="savefloorTradingJson()">保存</el-button>
+					<el-button type="success" @click="savefloorTradingJson()">销售</el-button>
 				</div>
 			</template>
 		</template>
@@ -73,16 +76,18 @@
 			<table class="demo-table">
 				<tr>
 					<td>卖出方</td>
+					<td>买入方</td>
 					<td>卖出数量 ( Kg )</td>
 					<td>单价 ( 元 / Kg )</td>
-					<td>指定人 ( 选填 )</td>
 					<td>操作</td>
-					<td>买入方</td>
 					<td>交易状态</td>
 				</tr>
 				<tr v-for="(sellItem,sellIndex) in sellList" :key="sellIndex">
 					<td>
 						{{sellItem.sellOrgName}}
+					</td>
+					<td>
+						{{sellItem.trader || '空'}}
 					</td>
 					<td>
 						{{sellItem.sellCount}}
@@ -91,22 +96,45 @@
 						{{sellItem.sellUnitPrice}}
 					</td>
 					<td>
-						{{sellItem.trader || '空'}}
+						<template v-if="($storage.get('orgId') + '') === (sellItem.buyOrgId + '')">
+							<template v-if="sellItem.sellState === 0">
+								取消交易
+							</template>
+							<template v-if="sellItem.sellState === 1">
+								<el-button type="success" @click="_handBuy(sellIndex)">
+									买入
+								</el-button>
+							</template>
+							<template v-if="sellItem.sellState === 2">
+								已交易
+							</template>
+						</template>
+						<template v-else>
+							<template v-if="sellItem.sellState === 0">
+								取消交易
+							</template>
+							<template v-if="sellItem.sellState === 1">
+								未交易
+							</template>
+							<template v-if="sellItem.sellState === 2">
+								已交易
+							</template>
+						</template>
 					</td>
-					<td @click="_handBuy(sellIndex)">
-						买入
-					</td>
-					<td>
-						{{sellItem.buyOrgName || '空'}}
-					</td>
-					<td v-if="sellItem.sellState === 2">
-						已交易
-					</td>
-					<td v-if="sellItem.sellState === 1">
-						未交易
-					</td>
-					<td v-if="sellItem.sellState === 0">
-						交易失败
+					<td >
+						<template v-if="sellItem.sellState === 0">
+							取消交易
+						</template>
+						<template v-if="sellItem.sellState === 1">
+							<template v-if="($storage.get('orgId') + '') === (sellItem.sellOrgId + '')">
+								<el-button type="success" @click="_handCancel(sellIndex)">
+									取消交易
+								</el-button>
+							</template>
+						</template>
+						<template v-if="sellItem.sellState === 2">
+							已交易
+						</template>
 					</td>
 				</tr>
 			</table>
@@ -165,22 +193,24 @@ export default {
 			areaList: [
 				{
 					label: '卖方区',
+					sellType: 'floorTrading',
 					areaType: 'sell'
 				},
 				{
 					label: '买方区',
+					sellType: 'otcTrading',
 					areaType: 'buy'
 				}
 			],
 			areaVal: '0',
 			tabList: [
 				{
-					label: '场内',
+					label: '系统卖出',
 					sellType: 'floorTrading',
 					routerLink: 'marketTip10'
 				},
 				{
-					label: '场外',
+					label: '小组交易',
 					sellType: 'otcTrading',
 					routerLink: 'marketTip10'
 				}
@@ -222,7 +252,7 @@ export default {
 		_ClickBuyer () {
 			let areaItem = this.areaList[this.areaVal];
 			this.areaType = areaItem.areaType;
-			this.record();
+			this.getListRecord();
 		},
 		// 查询 库存
 		init () {
@@ -250,25 +280,84 @@ export default {
 				}
 			}).then(res => {
 				if (res.success && res.data) {
-					this.orgList = res.data;
+					let arr = [];
+					for (let index = 0; index < res.data.length; index++) {
+						const element = res.data[index];
+						let orgId = this.$storage.get('orgId');
+						if (element.orgId + '' === orgId + '') {
+						} else {
+							arr.push(element);
+						}
+					}
+					this.orgList = arr;
 				}
 			});
 		},
 		// 场外
 		saveotcTradingJson () {
-			let param = {
-				sellType: this.sellType || '', // sellType
-				sellCount: this.fromInfo.sellCount || 0, // 卖出数量( kg )
-				sellUnitPrice: this.fromInfo.quotaBuyPenalty || 0 // 单价( 元 )
-			};
-			this.getPageJson(param);
+			if (this.fromInfo.sellCount <= 0) {
+				this.$message({
+					type: 'error',
+					message: '销售数量不能小于0KG'
+				});
+				return false;
+			}
+			if (this.fromInfo.sellCount > this.carbonQuotaAmount) {
+				this.$message({
+					type: 'error',
+					message: '销售数量不能大于现有碳汇数量'
+				});
+				return false;
+			}
+			this.$confirm(`是否销售${this.fromInfo.sellCount}KG碳汇，单价为：${this.fromInfo.quotaBuyPenalty}元`, '再次提示', {
+				confirmButtonText: '确定',
+				cancelButtonText: '取消',
+				center: true,
+				type: 'warning'
+			}).then(() => {
+				let param = {
+					sellType: this.sellType || '', // sellType
+					sellCount: this.fromInfo.sellCount || 0, // 卖出数量( kg )
+					sellUnitPrice: this.fromInfo.quotaBuyPenalty || 0 // 单价( 元 )
+				};
+				this.getPageJson(param);
+			});
 		},
 		// 场外
 		savefloorTradingJson () {
+			if (this.fromInfo.sellCount <= 0) {
+				this.$message({
+					type: 'error',
+					message: '销售数量不能小于0KG'
+				});
+				return false;
+			}
+			if (!this.fromInfo.orgId) {
+				this.$message({
+					type: 'error',
+					message: '请选择某一个小组'
+				});
+				return false;
+			}
+			if (this.fromInfo.MyUnitPrice <= 0) {
+				this.$message({
+					type: 'error',
+					message: '销售单价不能小于0元'
+				});
+				return false;
+			}
+			if (this.fromInfo.MyUnitPrice > this.fromInfo.quotaBuyPenalty) {
+				this.$message({
+					type: 'error',
+					message: '销售单价不能大于系统单价'
+				});
+				return false;
+			}
 			let param = {
 				sellType: this.sellType || 0,
-				appointOrgId: this.fromInfo.orgId || '',
 				sellCount: this.fromInfo.sellCount || 0,
+				appointOrgId: this.fromInfo.orgId || '',
+				buyOrgId: this.fromInfo.orgId || '',
 				sellUnitPrice: this.fromInfo.MyUnitPrice || 0
 			};
 			this.getPageJson(param);
@@ -288,6 +377,10 @@ export default {
 				}
 			}).then(res => {
 				if (res.success) {
+					this.$message({
+						type: 'success',
+						message: '销售成功'
+					});
 					this.init();
 				}
 			});
@@ -314,7 +407,7 @@ export default {
 		},
 		// 取消交易
 		_handCancel (recordIndex) {
-			let item = this.recordList[recordIndex];
+			let item = this.sellList[recordIndex];
 			let transactionId = item.transactionId;
 			this.$ajax({
 				method: 'post',
@@ -332,7 +425,7 @@ export default {
 				}
 			});
 		},
-		record () {
+		getListRecord () {
 			this.$ajax({
 				method: 'post',
 				url: '/stOrgQuotaTransactionRecord/findClazzSellQuotaTransactionInfoList',
