@@ -1,79 +1,110 @@
 <template>
 	<div class="stu">
-		<div>
-			<el-tabs v-model="areaVal" @tab-click="_ClickBuyer()">
-				<el-tab-pane v-for="(tabsItem, index) in areaList"
-				:key="index" :label="tabsItem.label">
-				</el-tab-pane>
-			</el-tabs>
-		</div>
-		<template v-if="areaType === 'sell'">
-			<el-tabs v-model="tabsVal" @tab-click="handleClick">
-				<el-tab-pane v-for="(tabsItem, index) in tabList"
-				:key="index" :label="tabsItem.label">
-				</el-tab-pane>
-			</el-tabs>
-			现有碳汇：{{carbonQuotaAmount}}
-			<!-- <el-button type="primary" @click="getRecord()">主要按钮</el-button> -->
-			<template v-if="sellType === 'floorTrading'">
-				<table class="demo-table mt20">
-					<tr>
-						<td>卖出数量 ( Kg )</td>
-						<td>系统单价 ( 元 / Kg )</td>
-						<!-- <td colspan="2">操作</td> -->
-					</tr>
-					<tr>
-						<td>
+		<el-tabs v-model="tabsVal" @tab-click="handleClick">
+			<el-tab-pane v-for="(tabsItem, index) in tabList"
+			:key="index" :label="tabsItem.label">
+			</el-tab-pane>
+		</el-tabs>
+		<p class="mt20">
+			现有碳配额：{{carbonQuotaAmount}}
+		</p>
+		<template v-if="sellType === 'floorTrading'">
+			<ul class="sell-box">
+				<li>
+					<div class="fl imgps">
+					</div>
+					<div class="fl sellinfo">
+						<p class="span1 mt20">
+							碳配额卖出
+						</p>
+						<p class="mt20">
+							卖出收益计算公式=卖出数量 ( Kg ) * 系统单价 ( 元 / Kg )
+						</p>
+						<div class="demo-input mt20">
+							卖出数量 ( Kg ):
 							<el-input-number  controls-position="right" size="mini" :controls="false" v-model="fromInfo.sellCount" :precision="0" :step="1" :max="100000000"></el-input-number>
-						</td>
-						<td>
-							{{fromInfo.quotaBuyPenalty}}
-						</td>
-						<!-- <td>确认出售</td>
-						<td @click="_isGetRecordDialog()">交易记录</td> -->
-					</tr>
-				</table>
-				<div class="mt20 center">
-					<el-button type="success" @click="saveotcTradingJson()">销售</el-button>
-				</div>
-			</template>
-			<template v-if="sellType === 'otcTrading'">
-				<table class="demo-table mt20">
+						</div>
+						<div class="mt20">
+							系统单价 ( 元 / Kg )：{{fromInfo.quotaBuyPenalty}}
+						</div>
+						<div class="clearfix mt20 demo-input">
+							卖出收益 ( 元 )：{{fromInfo.sellCount && (fromInfo.quotaBuyPenalty * fromInfo.sellCount) }}
+							<p class="tr">
+								<el-button type="success" size="mini" @click="saveotcTradingJson()">销售</el-button>
+							</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<div class="mt20 center">
+				<table class="demo-table">
 					<tr>
-						<td>选择小组</td>
+						<td>序号</td>
 						<td>卖出数量 ( Kg )</td>
-						<td>系统单价 ( 元 / Kg )</td>
-						<td>自定义单价 ( 元 / Kg )</td>
+						<td>单价 ( 元 / Kg )</td>
+						<td>收益</td>
 					</tr>
-					<tr>
+					<tr v-for="(recordItem, recordIndex) in recordFloorList" :key="recordIndex">
 						<td>
-							<el-select v-model="fromInfo.orgId" placeholder="请选择">
-								<el-option
-								v-for="item in orgList"
-								:key="item.orgId"
-								:label="item.orgName"
-								:value="item.orgId">
-								</el-option>
-							</el-select>
+							{{recordIndex + 1}}
 						</td>
 						<td>
-							<input type="text" v-model="fromInfo.sellCount" >
+							{{recordItem.sellCount}}
 						</td>
 						<td>
-							{{fromInfo.quotaBuyPenalty}}
+							{{recordItem.sellUnitPrice}}
 						</td>
 						<td>
-							<input type="text" v-model="fromInfo.MyUnitPrice">
+							{{recordItem.sellUnitPrice * recordItem.sellCount}}
 						</td>
 					</tr>
 				</table>
-				<div class="mt20 center">
-					<el-button type="success" @click="savefloorTradingJson()">销售</el-button>
-				</div>
-			</template>
+			</div>
 		</template>
-		<template v-if="areaType === 'buy'">
-			<table class="demo-table">
+		<template v-if="sellType === 'otcTrading'">
+			<ul class="sell-box bossd">
+				<li>
+					<div class="fl imgps">
+					</div>
+					<div class="fl sellinfo">
+						<p class="span1 mt15">
+							碳配额卖出
+						</p>
+						<p class="mt15">
+							卖出收益计算公式=卖出数量 ( Kg ) * 自定义单价 ( 元 / Kg )
+						</p>
+						<div class="mt15">
+							系统单价 ( 元 / Kg )：{{fromInfo.quotaBuyPenalty}}
+						</div>
+						<div class="mt15">
+							买入小组：
+								<el-select size="mini" v-model="fromInfo.orgId" placeholder="请选择">
+									<el-option
+									v-for="item in orgList"
+									:key="item.orgId"
+									:label="item.orgName"
+									:value="item.orgId">
+									</el-option>
+								</el-select>
+						</div>
+						<div class="demo-input mt15">
+							卖出数量 ( Kg ):
+							<el-input-number  controls-position="right" size="mini" :controls="false" v-model="fromInfo.sellCount" :precision="0" :step="1" :max="100000000"></el-input-number>
+						</div>
+						<div class="mt15">
+							自定义单价 ( 元 / Kg )：
+							<el-input-number  controls-position="right" size="mini" :controls="false" v-model="fromInfo.MyUnitPrice" :max="100000000"></el-input-number>
+						</div>
+						<div class="clearfix mt15 demo-input">
+							卖出收益 ( 元 )：{{fromInfo.MyUnitPrice && (fromInfo.MyUnitPrice * fromInfo.sellCount) }}
+							<p class="tr">
+								<el-button type="success" size="mini" @click="savefloorTradingJson()">销售</el-button>
+							</p>
+						</div>
+					</div>
+				</li>
+			</ul>
+			<table class="demo-table mt20">
 				<tr>
 					<td>卖出方</td>
 					<td>买入方</td>
@@ -82,7 +113,7 @@
 					<td>操作</td>
 					<td>交易状态</td>
 				</tr>
-				<tr v-for="(sellItem,sellIndex) in sellList" :key="sellIndex">
+				<tr v-for="(sellItem,sellIndex) in sellotcTradList" :key="sellIndex">
 					<td>
 						{{sellItem.sellOrgName}}
 					</td>
@@ -139,49 +170,6 @@
 				</tr>
 			</table>
 		</template>
-		<el-dialog
-			title="交易记录"
-			:visible.sync="isGetRecordDialog"
-			append-to-body
-			width="80%"
-			center>
-			<table class="demo-table">
-				<tr>
-					<td></td>
-					<td>指定人</td>
-					<td>卖出数量 ( Kg )</td>
-					<td>单价 ( 元 / Kg )</td>
-					<td>状态</td>
-					<td>操作</td>
-				</tr>
-				<tr v-for="(recordItem, recordIndex) in recordList" :key="recordIndex">
-					<td>
-						{{recordIndex + 1}}
-					</td>
-					<td>
-						{{recordItem.trader}}
-					</td>
-					<td>
-						{{recordItem.sellCount}}
-					</td>
-					<td>
-						{{recordItem.sellUnitPrice}}
-					</td>
-					<td v-if="recordItem.sellState === 2">
-						已交易
-					</td>
-					<td v-if="recordItem.sellState === 1">
-						未交易
-					</td>
-					<td v-if="recordItem.sellState === 0">
-						交易失败
-					</td>
-					<td @click="_handCancel(recordIndex)">
-						取消交易
-					</td>
-				</tr>
-			</table>
-		</el-dialog>
 	</div>
 </template>
 
@@ -190,18 +178,6 @@ export default {
 	name: 'my-course',
 	data () {
 		return {
-			areaList: [
-				{
-					label: '卖方区',
-					sellType: 'floorTrading',
-					areaType: 'sell'
-				},
-				{
-					label: '买方区',
-					sellType: 'otcTrading',
-					areaType: 'buy'
-				}
-			],
 			areaVal: '0',
 			tabList: [
 				{
@@ -215,13 +191,13 @@ export default {
 					routerLink: 'marketTip10'
 				}
 			],
-			recordList: [],
+			recordFloorList: [],
 			// tableType: 'pagetable1201',
 			isGetRecordDialog: false,
 			tableJson: {},
 			carbonQuotaAmount: '',
 			arrList: [],
-			sellList: [],
+			sellotcTradList: [],
 			showInputMap: {
 				value1: true,
 				value2: true,
@@ -231,28 +207,27 @@ export default {
 			sellType: 'floorTrading',
 			orgList: [],
 			fromInfo: {
-				orgId: '',
-				sellCount: '',
-				sellUnitPrice: ''
 			}
 		};
 	},
 	created () {
-		this.areaType = 'sell';
 		this.init();
+		this.tabsVal = '0';
+		this.handleClick();
 		this.getOrgList();
 	},
 	methods: {
 		// 切换 场内外
 		handleClick () {
 			let item = this.tabList[this.tabsVal];
+
 			this.sellType = item.sellType;
-		},
-		// 切换买卖方
-		_ClickBuyer () {
-			let areaItem = this.areaList[this.areaVal];
-			this.areaType = areaItem.areaType;
-			this.getListRecord();
+			if (item.sellType === 'floorTrading') {
+				this.getfloorRecord();
+			}
+			if (item.sellType === 'otcTrading') {
+				this.getotcTradRecord();
+			}
 		},
 		// 查询 库存
 		init () {
@@ -305,11 +280,11 @@ export default {
 			if (this.fromInfo.sellCount > this.carbonQuotaAmount) {
 				this.$message({
 					type: 'error',
-					message: '销售数量不能大于现有碳汇数量'
+					message: '销售数量不能大于现有碳配额数量'
 				});
 				return false;
 			}
-			this.$confirm(`是否销售${this.fromInfo.sellCount}KG碳汇，单价为：${this.fromInfo.quotaBuyPenalty}元`, '再次提示', {
+			this.$confirm(`是否销售${this.fromInfo.sellCount}KG碳配额，单价为：${this.fromInfo.quotaBuyPenalty}元`, '再次提示', {
 				confirmButtonText: '确定',
 				cancelButtonText: '取消',
 				center: true,
@@ -381,6 +356,12 @@ export default {
 						type: 'success',
 						message: '销售成功'
 					});
+					if (this.sellType === 'floorTrading') {
+						this.getfloorRecord();
+					}
+					if (this.sellType === 'otcTrading') {
+						this.getotcTradRecord();
+					}
 					this.init();
 				}
 			});
@@ -391,23 +372,24 @@ export default {
 			this.getRecord();
 		},
 		// 查询交易记录
-		getRecord () {
+		getfloorRecord () {
 			this.$ajax({
 				method: 'post',
 				url: '/stOrgQuotaTransactionRecord/getOrgSellCarbonQuotaInfoMap',
 				params: {
 					moldId: this.$route.query.moldId || this.moldId || '',
+					sellType: this.sellType,
 					clazzYearsPushId: this.$route.query.clazzYearsPushId || ''
 				}
 			}).then(res => {
 				if (res.success && res.data) {
-					this.recordList = res.data;
+					this.recordFloorList = res.data;
 				}
 			});
 		},
 		// 取消交易
 		_handCancel (recordIndex) {
-			let item = this.sellList[recordIndex];
+			let item = this.sellotcTradList[recordIndex];
 			let transactionId = item.transactionId;
 			this.$ajax({
 				method: 'post',
@@ -425,7 +407,7 @@ export default {
 				}
 			});
 		},
-		getListRecord () {
+		getotcTradRecord () {
 			this.$ajax({
 				method: 'post',
 				url: '/stOrgQuotaTransactionRecord/findClazzSellQuotaTransactionInfoList',
@@ -435,12 +417,12 @@ export default {
 				}
 			}).then(res => {
 				if (res.success && res.data) {
-					this.sellList = res.data;
+					this.sellotcTradList = res.data;
 				}
 			});
 		},
 		_handBuy (sellIndex) {
-			let item = this.sellList[sellIndex];
+			let item = this.sellotcTradList[sellIndex];
 			let transactionId = item.transactionId;
 			this.$ajax({
 				method: 'post',
@@ -470,5 +452,71 @@ export default {
 <style lang="scss" scoped>
 .stu{
 	color: white;
+}
+.sell-box{
+	width: 100%;
+	&.bossd{
+		li{
+			height: 305px;
+			.imgps{
+				width: 220px;
+				height: 100%;
+				background: url('./../common/images/financingMovableProperty.jpg');
+				background-size: cover;
+			}
+		}
+	}
+	li{
+		border: 1px solid #CCCCCC;
+		height: 240px;
+		margin-top: 20px;
+		cursor: pointer;
+		color: #ccc;
+		&.isSelect {
+			border: 1px solid #CCCCCC;
+			color: #373737;
+			.sellinfo{
+				.span1{
+					font-weight: 600;
+					color: #373737;
+				}
+				.span2{
+					font-size: 18px;
+					color: #EC7F00;
+				}
+				.span3{
+					font-family: PingFangSC-Regular;
+					font-size: 14px;
+					color: #666666;
+				}
+			}
+		}
+		&.active{
+			border: 1px solid #4657AD;
+		}
+		.imgps{
+			width: 220px;
+			height: 100%;
+			background: url('./../common/images/purchaseOnCredit.jpg');
+			background-size: cover;
+		}
+		.sellinfo{
+			width: calc(100% - 220px);
+			padding: 10px 20px;
+			.span1{
+				font-weight: 600;
+				color: #ccc;
+			}
+			.span2{
+				font-size: 18px;
+				color: #ccc;
+			}
+			.span3{
+				font-family: PingFangSC-Regular;
+				font-size: 14px;
+				color: #ccc;
+			}
+		}
+	}
 }
 </style>
